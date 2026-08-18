@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Contract | RJL Digital Solutions</title>
+  <link rel="icon" type="image/png" href="/rjl-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#07070F;color:#E8E9EF;font-family:'Manrope',sans-serif;line-height:1.7}
+    ::selection{background:#FF2D78;color:#fff}
+    .container{max-width:640px;margin:0 auto;padding:40px 24px 60px}
+    .header{text-align:center;margin-bottom:36px}
+    .header img{width:60px;height:60px;object-fit:contain;margin-bottom:16px}
+    .header h1{font-family:'Sora',sans-serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:6px}
+    .header p{font-size:13px;color:#8B8D9C}
+    .divider{width:60px;height:3px;background:linear-gradient(90deg,#FF2D78,#006D7A);border-radius:2px;margin:0 auto 36px}
+    .info-box{background:rgba(0,109,122,0.1);border:1px solid rgba(0,109,122,0.2);border-radius:10px;padding:14px 18px;margin-bottom:24px;font-size:13px;color:#8B8D9C}
+    .info-box strong{color:#00A5B5}
+    .section-label{font-family:'Sora',sans-serif;font-size:11px;font-weight:600;color:#FF2D78;text-transform:uppercase;letter-spacing:3px;margin:28px 0 14px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.07)}
+    .field{margin-bottom:18px}
+    .field label{display:block;font-size:12px;font-weight:600;color:#E8E9EF;margin-bottom:6px}
+    .field input,.field textarea,.field select{width:100%;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#fff;font-family:'Manrope',sans-serif;font-size:14px;transition:all 0.3s;outline:none}
+    .field input:focus,.field textarea:focus,.field select:focus{border-color:#FF2D78;box-shadow:0 0 0 3px rgba(255,45,120,0.08)}
+    .field textarea{resize:vertical;min-height:80px}
+    .field select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B8D9C' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+    .field select option{background:#0E0E1A;color:#E8E9EF}
+    .btn{width:100%;padding:16px;margin-top:24px;background:linear-gradient(135deg,#FF2D78,#006D7A);border:none;border-radius:14px;color:#fff;font-family:'Sora',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.4s;box-shadow:0 0 40px rgba(255,45,120,0.15)}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(255,45,120,0.25)}
+    .link-box{margin-top:24px;padding:20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,45,120,0.2);border-radius:12px;word-break:break-all}
+    .link-box p{font-size:12px;color:#8B8D9C;margin-bottom:8px}
+    .link-box a{color:#FF2D78;font-size:14px;font-weight:600;text-decoration:none}
+    .copy-btn{margin-top:12px;padding:10px 24px;border-radius:8px;border:1px solid #FF2D78;background:transparent;color:#FF2D78;font-family:'Sora',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.3s}
+    .copy-btn:hover{background:#FF2D78;color:#fff}
+    .hidden{display:none}
+    .footer{text-align:center;margin-top:48px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.07);font-size:11px;color:rgba(139,141,156,0.5)}
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <img src="/rjl-logo.png" alt="RJL" onerror="this.style.display='none'">
+    <h1>Create Contract</h1>
+    <p>Internal tool — fill in the project details, then send the link to your client for signing.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="info-box"><strong>How this works:</strong> You fill in the project scope, package, fee, and deliverables below. This generates a unique contract link. Send that link to the client. They see the full contract with your details pre-filled, add their name and signature, and submit. Both sides get a PDF copy automatically.</div>
+
+  <div id="createForm">
+    <div class="section-label">Client Information</div>
+    <div class="field"><label>Client Name / Business Name</label><input type="text" id="p_client" required placeholder="e.g. Shean Singh Law"></div>
+
+    <div class="section-label">Project Details</div>
+    <div class="field"><label>Project / Service Description</label><textarea id="p_scope" required placeholder="Describe what you are building for the client"></textarea></div>
+    <div class="field"><label>Package</label>
+      <select id="p_package" required>
+        <option value="" disabled selected>Select package</option>
+        <option>Starter</option>
+        <option>Growth</option>
+        <option>Full Suite</option>
+        <option>Custom</option>
+      </select>
+    </div>
+    <div class="field"><label>Key Deliverables</label><textarea id="p_deliverables" required placeholder="List what will be delivered (e.g. 5-page website, CRM setup, email automation)"></textarea></div>
+    <div class="field"><label>Total Fee (exact amount)</label><input type="text" id="p_fee" required placeholder="e.g. $800 USD"></div>
+    <div class="field"><label>Currency</label>
+      <select id="p_currency" required>
+        <option value="" disabled selected>Select currency</option>
+        <option>USD</option>
+        <option>NZD (converted from USD via Wise)</option>
+        <option>AUD (converted from USD via Wise)</option>
+        <option>Other (converted from USD via Wise)</option>
+      </select>
+    </div>
+    <div class="field"><label>Estimated Timeline</label><input type="text" id="p_timeline" required placeholder="e.g. 2 weeks, 30 days"></div>
+    <div class="field"><label>Number of Revision Rounds</label><input type="text" id="p_revisions" required placeholder="e.g. 3 for Starter, 5 for Growth, Unlimited for Full Suite"></div>
+
+    <button class="btn" onclick="generateLink()">Generate Contract Link</button>
+  </div>
+
+  <div id="linkResult" class="hidden">
+    <div class="link-box">
+      <p>Contract link generated. Send this to your client:</p>
+      <a id="contractLink" href="#" target="_blank"></a>
+      <br>
+      <button class="copy-btn" onclick="copyLink()">Copy Link</button>
+      <span id="copied" style="margin-left:12px;font-size:12px;color:#00A5B5;display:none">Copied!</span>
+    </div>
+    <button class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.1);margin-top:16px;box-shadow:none" onclick="location.reload()">Create Another Contract</button>
+  </div>
+
+  <div class="footer"><p>RJL Digital Solutions — Internal Tool</p></div>
+</div>
+
+<script>
+  function generateLink() {
+    const client = document.getElementById('p_client').value.trim();
+    const scope = document.getElementById('p_scope').value.trim();
+    const pkg = document.getElementById('p_package').value;
+    const deliverables = document.getElementById('p_deliverables').value.trim();
+    const fee = document.getElementById('p_fee').value.trim();
+    const currency = document.getElementById('p_currency').value;
+    const timeline = document.getElementById('p_timeline').value.trim();
+    const revisions = document.getElementById('p_revisions').value.trim();
+
+    if (!client || !scope || !pkg || !deliverables || !fee || !currency || !timeline || !revisions) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    const data = { client, scope, package: pkg, deliverables, fee, currency, timeline, revisions };
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+    const url = window.location.origin + '/contract.html?d=' + encoded;
+
+    document.getElementById('contractLink').href = url;
+    document.getElementById('contractLink').textContent = url;
+    document.getElementById('createForm').classList.add('hidden');
+    document.getElementById('linkResult').classList.remove('hidden');
+  }
+
+  function copyLink() {
+    const url = document.getElementById('contractLink').href;
+    navigator.clipboard.writeText(url).then(() => {
+      document.getElementById('copied').style.display = 'inline';
+      setTimeout(() => document.getElementById('copied').style.display = 'none', 2000);
+    });
+  }
+</script>
+</body>
+</html>

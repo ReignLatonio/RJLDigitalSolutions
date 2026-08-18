@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Discovery Form | RJL Digital Solutions</title>
+  <link rel="icon" type="image/png" href="/rjl-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #07070F;
+      color: #E8E9EF;
+      font-family: 'Manrope', sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    ::selection { background: #FF2D78; color: #fff; }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .header img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 24px;
+      filter: drop-shadow(0 4px 20px rgba(255,45,120,0.15));
+    }
+    .header h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .header p {
+      font-size: 15px;
+      color: #8B8D9C;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #FF2D78, #006D7A);
+      border-radius: 2px;
+      margin: 0 auto 48px;
+    }
+
+    .section-label {
+      font-family: 'Sora', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: #FF2D78;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .field {
+      margin-bottom: 24px;
+    }
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #E8E9EF;
+      margin-bottom: 8px;
+    }
+    .field label .optional {
+      font-weight: 400;
+      color: #8B8D9C;
+      font-size: 11px;
+    }
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.07);
+      color: #fff;
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+    }
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: #FF2D78;
+      box-shadow: 0 0 0 3px rgba(255,45,120,0.08);
+    }
+    .field textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .field select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B8D9C' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+    }
+    .field select option {
+      background: #0E0E1A;
+      color: #E8E9EF;
+    }
+    .field .hint {
+      font-size: 12px;
+      color: #8B8D9C;
+      margin-top: 6px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.07);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: #8B8D9C;
+      transition: all 0.3s;
+    }
+    .checkbox-group label:hover {
+      border-color: rgba(255,45,120,0.3);
+      color: #E8E9EF;
+    }
+    .checkbox-group input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #FF2D78;
+    }
+    .checkbox-group input[type="checkbox"]:checked + span {
+      color: #fff;
+    }
+
+    .file-upload {
+      border: 2px dashed rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 32px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .file-upload:hover {
+      border-color: rgba(255,45,120,0.3);
+      background: rgba(255,45,120,0.03);
+    }
+    .file-upload input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .file-upload .upload-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    .file-upload .upload-text {
+      font-size: 13px;
+      color: #8B8D9C;
+    }
+    .file-upload .upload-text strong {
+      color: #FF2D78;
+    }
+    .file-names {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #00A5B5;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      margin-top: 32px;
+      background: linear-gradient(135deg, #FF2D78, #006D7A);
+      border: none;
+      border-radius: 14px;
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s;
+      box-shadow: 0 0 40px rgba(255,45,120,0.15), 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .submit-btn:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 0 60px rgba(255,45,120,0.25), 0 16px 50px rgba(0,0,0,0.3);
+    }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .success-card {
+      text-align: center;
+      padding: 60px 32px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,45,120,0.2);
+      border-radius: 24px;
+      margin-top: 40px;
+    }
+    .success-card h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 24px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .success-card p {
+      color: #8B8D9C;
+      font-size: 15px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer p {
+      font-size: 11px;
+      color: rgba(139,141,156,0.5);
+    }
+    .footer a {
+      color: #FF2D78;
+      text-decoration: none;
+    }
+
+    .hidden { display: none; }
+
+    @media (max-width: 480px) {
+      .checkbox-group label {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="/rjl-logo.png" alt="RJL Digital Solutions" onerror="this.style.display='none'">
+      <h1>Client Discovery Form</h1>
+      <p>Thanks for booking a call with us. Fill this out before we meet so we can come prepared and make the most of our time together.</p>
+    </div>
+    <div class="divider"></div>
+
+    <form id="intakeForm">
+      <!-- SECTION 1: About You -->
+      <div class="section-label">About You</div>
+
+      <div class="field">
+        <label>Your Full Name</label>
+        <input type="text" name="name" required placeholder="First and last name">
+      </div>
+
+      <div class="field">
+        <label>Email Address</label>
+        <input type="email" name="email" required placeholder="you@company.com">
+      </div>
+
+      <div class="field">
+        <label>Phone Number <span class="optional">(optional)</span></label>
+        <input type="tel" name="phone" placeholder="+64 or +61 number">
+      </div>
+
+      <div class="field">
+        <label>Business or Firm Name</label>
+        <input type="text" name="business" required placeholder="Your company name">
+      </div>
+
+      <div class="field">
+        <label>Your Industry</label>
+        <select name="industry" required>
+          <option value="" disabled selected>Select your industry</option>
+          <option>Law / Legal Services</option>
+          <option>Consultancy / Professional Services</option>
+          <option>Real Estate / Property</option>
+          <option>Hospitality / Hotels</option>
+          <option>Healthcare</option>
+          <option>E-Commerce / Retail</option>
+          <option>Construction / Trades</option>
+          <option>Financial Services</option>
+          <option>Education</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Current Website <span class="optional">(if you have one)</span></label>
+        <input type="url" name="website" placeholder="https://yoursite.com">
+      </div>
+
+      <!-- SECTION 2: Your Challenges -->
+      <div class="section-label" style="margin-top:40px">Your Challenges</div>
+
+      <div class="field">
+        <label>What is slowing your business down right now?</label>
+        <textarea name="challenges" required placeholder="Tell us about the bottlenecks, manual processes, or things that frustrate you. Be as specific as you can."></textarea>
+      </div>
+
+      <div class="field">
+        <label>What are you hoping to achieve by working with us?</label>
+        <textarea name="goals" required placeholder="More leads? Save time? Better client experience? Launch a website? Automate something specific?"></textarea>
+      </div>
+
+      <div class="field">
+        <label>What services are you interested in? <span class="optional">(select all that apply)</span></label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="services" value="Website"><span>Website</span></label>
+          <label><input type="checkbox" name="services" value="Automation"><span>Automation</span></label>
+          <label><input type="checkbox" name="services" value="CRM"><span>CRM Setup</span></label>
+          <label><input type="checkbox" name="services" value="Funnels"><span>Funnels</span></label>
+          <label><input type="checkbox" name="services" value="Email/SMS"><span>Email/SMS</span></label>
+          <label><input type="checkbox" name="services" value="AI Systems"><span>AI Systems</span></label>
+          <label><input type="checkbox" name="services" value="Custom Tool"><span>Custom Tool</span></label>
+          <label><input type="checkbox" name="services" value="Not Sure"><span>Not sure yet</span></label>
+        </div>
+      </div>
+
+      <!-- SECTION 3: Tools and Setup -->
+      <div class="section-label" style="margin-top:40px">Your Current Setup</div>
+
+      <div class="field">
+        <label>What tools or platforms do you currently use? <span class="optional">(optional)</span></label>
+        <textarea name="current_tools" rows="3" placeholder="e.g. Google Workspace, Xero, Mailchimp, spreadsheets, paper-based, nothing yet..."></textarea>
+      </div>
+
+      <div class="field">
+        <label>How many people are on your team?</label>
+        <select name="team_size">
+          <option value="" disabled selected>Select team size</option>
+          <option>Just me</option>
+          <option>2-5 people</option>
+          <option>6-15 people</option>
+          <option>16-50 people</option>
+          <option>50+ people</option>
+        </select>
+      </div>
+
+      <!-- SECTION 4: Budget and Timeline -->
+      <div class="section-label" style="margin-top:40px">Budget and Timeline</div>
+
+      <div class="field">
+        <label>What is your budget range for this project?</label>
+        <select name="budget" required>
+          <option value="" disabled selected>Select a range</option>
+          <option>Under $600</option>
+          <option>$600 - $800 (Starter)</option>
+          <option>$1,200 - $1,500 (Growth)</option>
+          <option>$500/mo ongoing (Full Suite)</option>
+          <option>Not sure yet - help me figure it out</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>How soon do you need this done?</label>
+        <select name="timeline" required>
+          <option value="" disabled selected>Select timeline</option>
+          <option>As soon as possible</option>
+          <option>Within 2 weeks</option>
+          <option>Within 1 month</option>
+          <option>Within 2-3 months</option>
+          <option>No rush - just exploring</option>
+        </select>
+      </div>
+
+      <!-- SECTION 5: Uploads -->
+      <div class="section-label" style="margin-top:40px">Attachments <span style="color:#8B8D9C;text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></div>
+
+      <div class="field">
+        <label>Upload any relevant files <span class="optional">(screenshots, documents, brand assets)</span></label>
+        <div class="file-upload" id="fileUploadArea">
+          <div class="upload-icon">📎</div>
+          <div class="upload-text"><strong>Click to upload</strong> or drag files here</div>
+          <div class="upload-text" style="margin-top:4px">PNG, JPG, PDF, DOCX (max 5MB each)</div>
+          <input type="file" name="files" id="fileInput" multiple accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.xlsx,.csv">
+        </div>
+        <div class="file-names" id="fileNames" style="margin-top:8px;font-size:12px;color:#00A5B5"></div>
+      </div>
+
+      <!-- SECTION 6: Anything Else -->
+      <div class="section-label" style="margin-top:40px">Anything Else?</div>
+
+      <div class="field">
+        <label>Is there anything else you want us to know before the call? <span class="optional">(optional)</span></label>
+        <textarea name="additional" rows="3" placeholder="Any details, links, or context that might help us understand your situation better."></textarea>
+      </div>
+
+      <div class="field">
+        <label>How did you hear about RJL Digital Solutions?</label>
+        <select name="referral">
+          <option value="" disabled selected>Select one</option>
+          <option>LinkedIn</option>
+          <option>Instagram</option>
+          <option>WhatsApp</option>
+          <option>Google Search</option>
+          <option>Referral from someone</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">Submit Discovery Form</button>
+    </form>
+
+    <div id="successCard" class="success-card hidden">
+      <div style="font-size:40px;margin-bottom:16px">✦</div>
+      <h2>We have got everything we need.</h2>
+      <p>Thanks for filling this out. We will review your responses before our call so we can jump straight into solutions. Talk soon.</p>
+    </div>
+
+    <div class="footer">
+      <p>RJL Digital Solutions | <a href="https://rjl-digital-solutions.vercel.app">rjl-digital-solutions.vercel.app</a></p>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywTNxhnlNPSaWo20Ip27te9wHzgqU5nh9WEy3K_iDhjL7NfZZkrNi9hSUN5q5fX_BN/exec";
+
+    // File upload display
+    const fileInput = document.getElementById('fileInput');
+    const fileNames = document.getElementById('fileNames');
+    fileInput.addEventListener('change', () => {
+      const names = Array.from(fileInput.files).map(f => `${f.name} (${(f.size/1024/1024).toFixed(1)}MB)`).join(', ');
+      fileNames.textContent = names || '';
+    });
+
+    // Convert file to base64
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve({ name: file.name, type: file.type, data: reader.result.split(',')[1] });
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Form submission
+    const form = document.getElementById('intakeForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const successCard = document.getElementById('successCard');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Uploading and sending...';
+
+      // Collect checkboxes
+      const services = [];
+      form.querySelectorAll('input[name="services"]:checked').forEach(cb => services.push(cb.value));
+
+      // Convert files to base64
+      const files = [];
+      if (fileInput.files.length > 0) {
+        submitBtn.textContent = 'Processing files...';
+        for (const file of fileInput.files) {
+          if (file.size > 5 * 1024 * 1024) {
+            alert(`File "${file.name}" is over 5MB. Please remove it and try again.`);
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Discovery Form';
+            return;
+          }
+          const b64 = await fileToBase64(file);
+          files.push(b64);
+        }
+      }
+
+      const payload = {
+        name: form.querySelector('[name="name"]').value,
+        email: form.querySelector('[name="email"]').value,
+        phone: form.querySelector('[name="phone"]').value,
+        business: form.querySelector('[name="business"]').value,
+        industry: form.querySelector('[name="industry"]').value,
+        website: form.querySelector('[name="website"]').value,
+        challenges: form.querySelector('[name="challenges"]').value,
+        goals: form.querySelector('[name="goals"]').value,
+        services: services.join(', '),
+        current_tools: form.querySelector('[name="current_tools"]').value,
+        team_size: form.querySelector('[name="team_size"]').value,
+        budget: form.querySelector('[name="budget"]').value,
+        timeline: form.querySelector('[name="timeline"]').value,
+        additional: form.querySelector('[name="additional"]').value,
+        referral: form.querySelector('[name="referral"]').value,
+        files: files,
+      };
+
+      submitBtn.textContent = 'Sending...';
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(payload)
+        });
+
+        form.classList.add('hidden');
+        successCard.classList.remove('hidden');
+      } catch (err) {
+        alert('Something went wrong. Please try again or email us at rjldigitalsolutions94@gmail.com');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Discovery Form';
+      }
+    });
+  </script>
+</body>
+</html>
