@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Invoice | RJL Digital Solutions</title>
+  <link rel="icon" type="image/png" href="/rjl-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#07070F;color:#E8E9EF;font-family:'Manrope',sans-serif;line-height:1.7}
+    ::selection{background:#FF2D78;color:#fff}
+    .container{max-width:640px;margin:0 auto;padding:40px 24px 60px}
+    .header{text-align:center;margin-bottom:36px}
+    .header img{width:60px;height:60px;object-fit:contain;margin-bottom:16px}
+    .header h1{font-family:'Sora',sans-serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:6px}
+    .header p{font-size:13px;color:#8B8D9C}
+    .divider{width:60px;height:3px;background:linear-gradient(90deg,#FF2D78,#006D7A);border-radius:2px;margin:0 auto 36px}
+    .section-label{font-family:'Sora',sans-serif;font-size:11px;font-weight:600;color:#FF2D78;text-transform:uppercase;letter-spacing:3px;margin:28px 0 14px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.07)}
+    .field{margin-bottom:18px}
+    .field label{display:block;font-size:12px;font-weight:600;color:#E8E9EF;margin-bottom:6px}
+    .field label .note{font-weight:400;color:#8B8D9C;font-size:11px}
+    .field input,.field textarea,.field select{width:100%;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#fff;font-family:'Manrope',sans-serif;font-size:14px;transition:all 0.3s;outline:none}
+    .field input:focus,.field textarea:focus,.field select:focus{border-color:#FF2D78;box-shadow:0 0 0 3px rgba(255,45,120,0.08)}
+    .field select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B8D9C' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+    .field select option{background:#0E0E1A;color:#E8E9EF}
+    .row{display:flex;gap:12px}
+    .row .field{flex:1}
+    .line-items{margin:16px 0}
+    .line-item{display:flex;gap:10px;align-items:flex-end;margin-bottom:10px}
+    .line-item .desc{flex:3}
+    .line-item .qty{flex:0.7}
+    .line-item .rate{flex:1}
+    .line-item .amt{flex:1}
+    .line-item input{padding:10px 12px;font-size:13px}
+    .line-item label{font-size:11px;color:#8B8D9C;margin-bottom:4px;display:block}
+    .add-line{padding:8px 20px;border-radius:8px;border:1px dashed rgba(255,255,255,0.15);background:transparent;color:#8B8D9C;font-family:'Manrope',sans-serif;font-size:12px;cursor:pointer;transition:all 0.3s;width:100%;margin-top:4px}
+    .add-line:hover{border-color:#FF2D78;color:#FF2D78}
+    .remove-line{padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#8B8D9C;font-size:11px;cursor:pointer;margin-bottom:2px;flex-shrink:0}
+    .remove-line:hover{border-color:#FF2D78;color:#FF2D78}
+    .totals{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px 20px;margin-top:16px}
+    .total-row{display:flex;justify-content:space-between;padding:6px 0;font-size:14px}
+    .total-row.grand{border-top:1px solid rgba(255,255,255,0.1);margin-top:8px;padding-top:12px;font-weight:700;color:#FF2D78;font-size:18px}
+    .btn{width:100%;padding:16px;margin-top:24px;border:none;border-radius:14px;color:#fff;font-family:'Sora',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.4s}
+    .btn-primary{background:linear-gradient(135deg,#FF2D78,#006D7A);box-shadow:0 0 40px rgba(255,45,120,0.15)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(255,45,120,0.25)}
+    .btn:disabled{opacity:0.6;cursor:wait}
+    .success-card{text-align:center;padding:48px 28px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,45,120,0.2);border-radius:20px;margin-top:32px}
+    .success-card h2{font-family:'Sora',sans-serif;font-size:22px;color:#fff;margin-bottom:10px}
+    .success-card p{color:#8B8D9C;font-size:14px;margin-bottom:8px}
+    .hidden{display:none}
+    .footer{text-align:center;margin-top:48px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.07);font-size:11px;color:rgba(139,141,156,0.5)}
+    .checkbox-row{display:flex;align-items:center;gap:10px;margin:20px 0}
+    .checkbox-row input{width:18px;height:18px;accent-color:#FF2D78}
+    .checkbox-row label{font-size:13px;color:#8B8D9C}
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <img src="/rjl-logo.png" alt="RJL" onerror="this.style.display='none'">
+    <h1>Create Invoice</h1>
+    <p>Internal tool — generate and send a branded invoice to your client.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div id="invoiceForm">
+    <div class="section-label">Invoice Details</div>
+    <div class="row">
+      <div class="field"><label>Invoice Number</label><input type="text" id="inv_number" placeholder="e.g. RJL-001"></div>
+      <div class="field"><label>Invoice Date</label><input type="date" id="inv_date"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Due Date</label><input type="date" id="inv_due"></div>
+      <div class="field">
+        <label>Payment Type</label>
+        <select id="inv_type">
+          <option value="upfront">50% Upfront Payment</option>
+          <option value="final">50% Final Payment</option>
+          <option value="full">Full Payment</option>
+          <option value="subscription">Monthly Subscription</option>
+          <option value="custom">Custom / Hourly</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-label">Client Details</div>
+    <div class="field"><label>Client Name / Business Name</label><input type="text" id="inv_client" required placeholder="e.g. Shean Singh Law"></div>
+    <div class="field"><label>Client Email</label><input type="email" id="inv_email" required placeholder="client@company.com"></div>
+    <div class="field"><label>Client Address <span class="note">(optional)</span></label><input type="text" id="inv_address" placeholder="City, Country"></div>
+
+    <div class="section-label">Line Items</div>
+    <div id="lineItems">
+      <div class="line-item" data-index="0">
+        <div class="desc"><label>Description</label><input type="text" placeholder="e.g. Professional 5-page website"></div>
+        <div class="qty"><label>Qty</label><input type="number" value="1" min="1"></div>
+        <div class="rate"><label>Rate (USD)</label><input type="number" placeholder="800" step="0.01"></div>
+        <div class="amt"><label>Amount</label><input type="text" readonly value="$0.00" style="color:#FF2D78;font-weight:600"></div>
+        <button class="remove-line" onclick="removeLine(this)" title="Remove">✕</button>
+      </div>
+    </div>
+    <button class="add-line" onclick="addLine()">+ Add another line item</button>
+
+    <div class="totals">
+      <div class="total-row"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+      <div class="total-row"><span>Discount</span><span id="discountDisplay">$0.00</span></div>
+      <div class="total-row grand"><span>Total Due</span><span id="grandTotal">$0.00</span></div>
+    </div>
+
+    <div class="section-label">Additional Options</div>
+    <div class="row">
+      <div class="field"><label>Currency</label>
+        <select id="inv_currency">
+          <option value="USD">USD</option>
+          <option value="NZD (converted via Wise)">NZD (converted via Wise)</option>
+          <option value="AUD (converted via Wise)">AUD (converted via Wise)</option>
+          <option value="Other (converted via Wise)">Other (converted via Wise)</option>
+        </select>
+      </div>
+      <div class="field"><label>Discount (USD)</label><input type="number" id="inv_discount" value="0" step="0.01" oninput="calculateTotals()"></div>
+    </div>
+    <div class="field"><label>Notes to Client <span class="note">(optional)</span></label><input type="text" id="inv_notes" placeholder="e.g. Thank you for your business!"></div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="inv_send" checked>
+      <label for="inv_send">Send invoice directly to client's email</label>
+    </div>
+
+    <button class="btn btn-primary" id="submitBtn" onclick="generateInvoice()">Generate and Send Invoice</button>
+  </div>
+
+  <div id="successCard" class="success-card hidden">
+    <div style="font-size:36px;margin-bottom:16px">✓</div>
+    <h2>Invoice Sent</h2>
+    <p>Invoice has been emailed to the client and a copy has been sent to your inbox.</p>
+    <p style="color:#FF2D78;font-weight:600;margin-top:12px" id="successDetail"></p>
+    <button class="btn btn-primary" style="margin-top:20px;max-width:300px;margin-left:auto;margin-right:auto" onclick="location.reload()">Create Another Invoice</button>
+  </div>
+
+  <div class="footer"><p>RJL Digital Solutions — Internal Tool</p></div>
+</div>
+
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywTNxhnlNPSaWo20Ip27te9wHzgqU5nh9WEy3K_iDhjL7NfZZkrNi9hSUN5q5fX_BN/exec";
+
+  // Set dates
+  const today = new Date();
+  document.getElementById('inv_date').valueAsDate = today;
+  const due = new Date(today);
+  due.setDate(due.getDate() + 7);
+  document.getElementById('inv_due').valueAsDate = due;
+
+  // Auto invoice number based on date and time for uniqueness
+  const seq = String(today.getHours()).padStart(2,'0') + String(today.getMinutes()).padStart(2,'0');
+  document.getElementById('inv_number').value = 'RJL-' + String(today.getFullYear()).slice(2) + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0') + '-' + seq;
+
+  // Line items
+  function addLine() {
+    const container = document.getElementById('lineItems');
+    const idx = container.children.length;
+    const div = document.createElement('div');
+    div.className = 'line-item';
+    div.dataset.index = idx;
+    div.innerHTML = '<div class="desc"><input type="text" placeholder="e.g. CRM setup and configuration"></div><div class="qty"><input type="number" value="1" min="1"></div><div class="rate"><input type="number" placeholder="0" step="0.01"></div><div class="amt"><input type="text" readonly value="$0.00" style="color:#FF2D78;font-weight:600"></div><button class="remove-line" onclick="removeLine(this)" title="Remove">✕</button>';
+    container.appendChild(div);
+    attachListeners();
+  }
+
+  function removeLine(btn) {
+    const container = document.getElementById('lineItems');
+    if (container.children.length > 1) {
+      btn.parentElement.remove();
+      calculateTotals();
+    }
+  }
+
+  function calculateTotals() {
+    const items = document.querySelectorAll('.line-item');
+    let subtotal = 0;
+    items.forEach(item => {
+      const qty = parseFloat(item.querySelector('.qty input').value) || 0;
+      const rate = parseFloat(item.querySelector('.rate input').value) || 0;
+      const amt = qty * rate;
+      item.querySelector('.amt input').value = '$' + amt.toFixed(2);
+      subtotal += amt;
+    });
+    const discount = parseFloat(document.getElementById('inv_discount').value) || 0;
+    const total = subtotal - discount;
+    document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+    document.getElementById('discountDisplay').textContent = '-$' + discount.toFixed(2);
+    document.getElementById('grandTotal').textContent = '$' + total.toFixed(2);
+  }
+
+  function attachListeners() {
+    document.querySelectorAll('.line-item .qty input, .line-item .rate input').forEach(input => {
+      input.removeEventListener('input', calculateTotals);
+      input.addEventListener('input', calculateTotals);
+    });
+  }
+  attachListeners();
+
+  function getLineItems() {
+    const items = [];
+    document.querySelectorAll('.line-item').forEach(item => {
+      const desc = item.querySelector('.desc input').value;
+      const qty = parseFloat(item.querySelector('.qty input').value) || 0;
+      const rate = parseFloat(item.querySelector('.rate input').value) || 0;
+      if (desc && rate > 0) {
+        items.push({ description: desc, quantity: qty, rate: rate, amount: qty * rate });
+      }
+    });
+    return items;
+  }
+
+  async function generateInvoice() {
+    const client = document.getElementById('inv_client').value.trim();
+    const email = document.getElementById('inv_email').value.trim();
+    const items = getLineItems();
+
+    if (!client || !email) { alert('Please fill in client name and email.'); return; }
+    if (items.length === 0) { alert('Please add at least one line item with a description and rate.'); return; }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Generating invoice...';
+
+    const discount = parseFloat(document.getElementById('inv_discount').value) || 0;
+    const subtotal = items.reduce((sum, i) => sum + i.amount, 0);
+
+    const payload = {
+      type: "invoice",
+      invoice_number: document.getElementById('inv_number').value,
+      invoice_date: document.getElementById('inv_date').value,
+      due_date: document.getElementById('inv_due').value,
+      payment_type: document.getElementById('inv_type').value,
+      client_name: client,
+      client_email: email,
+      client_address: document.getElementById('inv_address').value,
+      line_items: items,
+      subtotal: subtotal,
+      discount: discount,
+      total: subtotal - discount,
+      currency: document.getElementById('inv_currency').value,
+      notes: document.getElementById('inv_notes').value,
+      send_to_client: document.getElementById('inv_send').checked,
+    };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload)
+      });
+      document.getElementById('invoiceForm').classList.add('hidden');
+      document.getElementById('successDetail').textContent = payload.invoice_number + ' — $' + payload.total.toFixed(2) + ' ' + payload.currency;
+      document.getElementById('successCard').classList.remove('hidden');
+    } catch (err) {
+      alert('Something went wrong. Please try again.');
+      btn.disabled = false;
+      btn.textContent = 'Generate and Send Invoice';
+    }
+  }
+</script>
+</body>
+</html>
